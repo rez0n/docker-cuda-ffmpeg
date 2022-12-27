@@ -1,0 +1,29 @@
+name: Build Docker Image
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - uses: jungwinter/split@v2
+      id: reponame
+      with:
+        msg: ${{github.repository}}
+        separator: '/'
+
+    - name: Build and Publish APP image
+      uses: elgohr/Publish-Docker-Github-Action@v4
+      with:
+        name: ${{ steps.reponame.outputs._0 }}/cuda-ffmpeg
+        registry: ghcr.io
+        username: ${{ steps.reponame.outputs._0 }}
+        password: ${{ secrets.DOCKER_PAT }}
+        dockerfile: Dockerfile
+        tags: latest, ubuntu-16.04, cuda-11.4, 3.2-nvidia

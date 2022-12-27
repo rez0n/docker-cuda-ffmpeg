@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  docker_cuda_ffmpeg:
+    container_name: docker_cuda_ffmpeg
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: docker_cuda_ffmpeg
+    restart: always
