@@ -26,4 +26,4 @@ jobs:
         username: ${{ steps.reponame.outputs._0 }}
         password: ${{ secrets.DOCKER_PAT }}
         dockerfile: Dockerfile
-        tags: latest, ubuntu-16.04, cuda-11.4, 3.2-nvidia, ffmpeg-5
+        tags: latest, ubuntu-18.04, cuda-11.4, 3.2-nvidia, ffmpeg-5

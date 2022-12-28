@@ -6,7 +6,7 @@
 #
 #
 
-FROM    nvidia/cuda:10.2-devel-ubuntu16.04 AS devel-base
+FROM    nvidia/cuda:10.2-devel-ubuntu18.04 AS devel-base
 ENV     NVIDIA_DRIVER_CAPABILITIES compute,utility,video
 WORKDIR /tmp/workdir
 
@@ -538,7 +538,7 @@ RUN \
 
 
 
-FROM    nvidia/cuda:10.2-runtime-ubuntu16.04 AS runtime-base
+FROM    nvidia/cuda:10.2-runtime-ubuntu18.04 AS runtime-base
 LABEL   org.opencontainers.image.source="https://github.com/rez0n/docker-cuda-ffmpeg"
 
 ENV	    NVIDIA_DRIVER_CAPABILITIES compute,utility,video
