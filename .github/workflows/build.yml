@@ -19,7 +19,7 @@ jobs:
         separator: '/'
 
     - name: Build and Publish APP image
-      uses: elgohr/Publish-Docker-Github-Action@v4
+      uses: elgohr/Publish-Docker-Github-Action@v5
       with:
         name: ${{ steps.reponame.outputs._0 }}/cuda-ffmpeg
         registry: ghcr.io
