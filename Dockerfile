@@ -6,7 +6,7 @@
 #
 #
 
-FROM    nvidia/cuda:10.2-devel-ubuntu18.04 AS devel-base
+FROM    nvidia/cuda:12.1.1-devel-ubuntu22.04 AS devel-base
 ENV     NVIDIA_DRIVER_CAPABILITIES compute,utility,video
 WORKDIR /tmp/workdir
 
@@ -18,9 +18,9 @@ RUN     apt-get -yqq update && \
 
 FROM  devel-base as build
 
-ENV        NVIDIA_HEADERS_VERSION=11.0.10.2
+ENV        NVIDIA_HEADERS_VERSION=12.0.16.0
 
-ENV         FFMPEG_VERSION=5.0.2 \
+ENV         FFMPEG_VERSION=5.0.3 \
             AOM_VERSION=v1.0.0 \
             FDKAAC_VERSION=0.1.5 \
             FONTCONFIG_VERSION=2.12.4 \
@@ -31,8 +31,8 @@ ENV         FFMPEG_VERSION=5.0.2 \
             LIBASS_VERSION=0.13.7 \
             LIBPTHREAD_STUBS_VERSION=0.4 \
             LIBVIDSTAB_VERSION=1.1.0 \
-            LIBXCB_VERSION=1.13.1 \
-            XCBPROTO_VERSION=1.13 \
+            LIBXCB_VERSION=1.15 \
+            XCBPROTO_VERSION=1.15.2 \
             OGG_VERSION=1.3.2 \
             OPENCOREAMR_VERSION=0.1.5 \
             OPUS_VERSION=1.2 \
@@ -69,7 +69,7 @@ ARG         LIBZMQ_SHA256SUM="02ecc88466ae38cf2c8d79f09cfd2675ba299a439680b64ade
 
 ARG         LD_LIBRARY_PATH=/opt/ffmpeg/lib
 ARG         MAKEFLAGS="-j4"
-ARG         PKG_CONFIG_PATH="/opt/ffmpeg/share/pkgconfig:/opt/ffmpeg/lib/pkgconfig:/opt/ffmpeg/lib64/pkgconfig"
+ARG         PKG_CONFIG_PATH="/opt/ffmpeg/share/pkgconfig:/opt/ffmpeg/lib/pkgconfig:/opt/ffmpeg/lib64/pkgconfig:/usr/lib/pkgconfig"
 ARG         PREFIX=/opt/ffmpeg
 ARG         LD_LIBRARY_PATH="/opt/ffmpeg/lib:/opt/ffmpeg/lib64"
 
@@ -89,7 +89,9 @@ RUN      buildDeps="autoconf \
                     nasm \
                     perl \
                     pkg-config \
-                    python \
+                    python3 \
+                    python-is-python3 \
+                    x11proto-core-dev \
                     libssl-dev \
                     yasm \
                     zlib1g-dev" && \
@@ -538,7 +540,7 @@ RUN \
 
 
 
-FROM    nvidia/cuda:10.2-runtime-ubuntu18.04 AS runtime-base
+FROM    nvidia/cuda:12.1.1-runtime-ubuntu22.04 AS runtime-base
 LABEL   org.opencontainers.image.source="https://github.com/rez0n/docker-cuda-ffmpeg"
 
 ENV	    NVIDIA_DRIVER_CAPABILITIES compute,utility,video
